@@ -1,0 +1,32 @@
+.job-item-container {
+  background-color: #272727;
+  color: white;
+  padding: 30px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  width: 1300px;
+}
+.job-item-logo {
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+}
+.title-rating {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.location-salary-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.location-intern {
+  display: flex;
+}
+.location-job {
+  margin-left: 10px;
+}
+.description-job {
+  font-size: 25px;
+}

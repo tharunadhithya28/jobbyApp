@@ -27,6 +27,9 @@
   padding: 8px;
   border-radius: 5px;
   border-color: transparent;
-  cursor: pointer;
   margin-right: 20px;
+}
+a {
+  color: white;
+  text-decoration: none;
 }

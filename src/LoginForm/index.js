@@ -1,4 +1,5 @@
 import {Component} from 'react'
+import {Redirect} from 'react-router-dom'
 import './index.css'
 import Cookies from 'js-cookie'
 
@@ -45,6 +46,10 @@ class LoginForm extends Component {
 
   render() {
     const {username, password} = this.state
+    const token = Cookies.get('jwt_token')
+    if (token !== undefined) {
+      return <Redirect to="/" />
+    }
     return (
       <div className="bg-container-login">
         <div className="box-container">

@@ -1,0 +1,17 @@
+.filter-employment {
+  color: white;
+  list-style: none;
+  margin-bottom: 10px;
+}
+.filter-employment-title {
+  color: white;
+  font-size: 18px;
+  font-family: 'roboto';
+}
+
+.filter-container {
+  margin-top: 35px;
+}
+hr {
+  margin-top: 30px;
+}

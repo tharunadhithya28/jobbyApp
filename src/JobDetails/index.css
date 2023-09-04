@@ -1,0 +1,58 @@
+.skills-list {
+  list-style: none;
+  display: flex;
+}
+.skill-image {
+  width: 50px;
+  margin-right: 8px;
+}
+.skills-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+.life-container {
+  display: flex;
+}
+.similar-list {
+  background-color: #272727;
+  list-style: none;
+  width: 400px;
+  color: white;
+  padding: 25px;
+  border-radius: 18px;
+}
+.similar-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+.job-details-container {
+  background-color: black;
+  color: white;
+  padding: 35px;
+}
+.job-item-container-job {
+  background-color: #272727;
+  color: white;
+  padding: 30px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  width: 1300px;
+  margin-left: 250px;
+}
+.similar-text {
+  margin-left: 200px;
+}
+.description-visit {
+  display: flex;
+  flex-direction: row;
+}
+.loader-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  align-items: center;
+}

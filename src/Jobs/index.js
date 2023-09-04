@@ -1,12 +1,27 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
+import './index.css'
+import {AiOutlineSearch} from 'react-icons/ai'
+import Loader from 'react-loader-spinner'
 import Profile from '../Profile'
 import JobItem from '../JobItem'
 import Header from '../Header'
+import FilterItems from '../FilterItems'
+
+const apiStatus = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inprogress: 'INPROGRESS',
+}
 
 class Jobs extends Component {
   state = {
-    jobData: '',
+    jobData: [],
+    employmentFilter: '',
+    salaryFilter: '',
+    searchFilter: '',
+    apiRunning: apiStatus.initial,
   }
 
   componentDidMount() {
@@ -14,9 +29,32 @@ class Jobs extends Component {
     this.getJobItems()
   }
 
+  filterByEmployment = (employmentFilter, onOrOff) => {
+    console.log(employmentFilter)
+    console.log(onOrOff)
+    if (onOrOff) {
+      this.setState({employmentFilter}, this.getJobItems)
+    } else {
+      this.setState({employmentFilter: ''}, this.getJobItems)
+    }
+  }
+
+  filterBySalary = salaryFilter => {
+    this.setState({salaryFilter}, this.getJobItems)
+  }
+
+  listenSearch = event => {
+    this.setState({searchFilter: event.target.value})
+  }
+
+  listenEnterKey = () => {
+    this.getJobItems()
+  }
+
   getJobItems = async () => {
-    const {jobData} = this.state
-    const apiUrl = 'https://apis.ccbp.in/jobs'
+    this.setState({apiRunning: apiStatus.inprogress})
+    const {jobData, employmentFilter, salaryFilter, searchFilter} = this.state
+    const apiUrl = `https://apis.ccbp.in/jobs?employment_type=${employmentFilter}&minimum_package=${salaryFilter}&search=${searchFilter}`
     const jwtToken = Cookies.get('jwt_token')
     const options = {
       headers: {
@@ -27,7 +65,7 @@ class Jobs extends Component {
     const response = await fetch(apiUrl, options)
     if (response.ok === true) {
       const data = await response.json()
-      console.log(data.jobs)
+
       const updatedData = data.jobs.map(eachItem => ({
         companyLogoUrl: eachItem.company_logo_url,
         employmentType: eachItem.employment_type,
@@ -38,20 +76,57 @@ class Jobs extends Component {
         rating: eachItem.rating,
         title: eachItem.title,
       }))
-      console.log(updatedData)
-      this.setState({jobData: updatedData})
+
+      this.setState({jobData: updatedData, apiRunning: apiStatus.success})
+    } else {
+      this.setState({apiRunning: apiStatus.failure})
     }
   }
 
+  apiSuccessful = () => {}
+
   render() {
-    const {jobData} = this.state
+    const {employmentTypesList, salaryRangesList} = this.props
+    const {jobData, apiRunning} = this.state
+
     return (
       <>
         <Header />
-        <Profile />
-        {jobData.map(eachItem => (
-          <JobItem jobList={eachItem} />
-        ))}
+        <div className="job-portal">
+          <div className="profile-filter">
+            <Profile apiRunning={apiRunning} />
+            <hr />
+            <FilterItems
+              employmentTypesList={employmentTypesList}
+              salaryRangesList={salaryRangesList}
+              filterByEmployment={this.filterByEmployment}
+              filterBySalary={this.filterBySalary}
+              key={employmentTypesList.id}
+            />
+          </div>
+          <div>
+            <button onClick={this.listenEnterKey} data-testid="searchButton">
+              <div className="search-container">
+                <input
+                  type="search"
+                  placeholder="Search"
+                  className="search"
+                  onChange={this.listenSearch}
+                />
+                <AiOutlineSearch className="search-icon" />
+              </div>
+            </button>
+            <ul className="job-items">
+              {jobData.map(eachItem => (
+                <JobItem
+                  jobList={eachItem}
+                  key={eachItem.id}
+                  apiRunning={apiRunning}
+                />
+              ))}
+            </ul>
+          </div>
+        </div>
       </>
     )
   }
