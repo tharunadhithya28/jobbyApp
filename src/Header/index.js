@@ -2,8 +2,8 @@ import {Link, withRouter} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import './index.css'
 
-const Header = () => {
-  const onClickLogout = props => {
+const Header = props => {
+  const onClickLogout = () => {
     console.log(props)
     const {history} = props
     Cookies.remove('jwt_token')

@@ -105,17 +105,18 @@ class Jobs extends Component {
             />
           </div>
           <div>
-            <button onClick={this.listenEnterKey} data-testid="searchButton">
-              <div className="search-container">
-                <input
-                  type="search"
-                  placeholder="Search"
-                  className="search"
-                  onChange={this.listenSearch}
-                />
+            <div className="search-container">
+              <input
+                type="search"
+                placeholder="Search"
+                className="search"
+                onChange={this.listenSearch}
+              />
+              <button onClick={this.listenEnterKey} data-testid="searchButton">
                 <AiOutlineSearch className="search-icon" />
-              </div>
-            </button>
+              </button>
+            </div>
+
             <ul className="job-items">
               {jobData.map(eachItem => (
                 <JobItem
